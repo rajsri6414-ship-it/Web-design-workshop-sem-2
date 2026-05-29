@@ -1,76 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bootstrap web page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-<body>
-    <h1>bootstrap webpage</h1>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <div class="container bg-light p-4">
-        <p>
-            Bootstrap’s color palette has continued to expand and become more nuanced in v5.3.0. We have added new
-            variables
-            for secondary and tertiary text and background colors, plus {color}-bg-subtle, {color}-border-subtle, and
-            {color}-text-emphasis for our theme colors. These new colors are available through Sass and CSS variables
-            (but
-            not our color maps or utility classes) with the express goal of making it easier to customize across
-            multiple
-            colors modes like light and dark. These new variables are globally set on :root and are adapted for our new
-            dark
-            color mode while our original theme colors remain unchanged.
-        </p>
+APP.JSX
+import React from 'react';
+import './App.css';
+const Student = (props) => {
+return (
+<div className="student-card">
+    <h2>Student Details</h2>
+    <p>
+        <strong>Name:</strong> {props.name}
+    </p>
+    <p>
+        <strong>Course:</strong> {props.course}
+    </p>
+    <p>
+        <strong>Marks:</strong> {props.marks}
+    </p>
+</div>
+);
+};
+function App() {
+return (
+<div className="App">
+    <h1>Student Information System</h1>
+    <div className="student-container">
+        <Student name="Monika" course="B.Tech Data Science" marks="95" />
+        <Student name="Rahul" course="B.Tech CS" marks="88" />
+        <Student name="Sneha" course="B.Tech IT" marks="92" />
     </div>
-    <div></div>
-    <div class="container">
-        <div class="row gy-2">
-            <div class="col-lg-6 bg-primary">column 1</div>
-            <div class="col-lg-6 bg-secondary">column 2</div>
-            <div class="col-lg-4 bg-success">column 3</div>
-            <div class="col-lg-4 bg-danger">column 4</div>
-            <div class="col-lg-4 bg-warning">column 5</div>
-        </div>
-    </div>
-    <h2>Time table</h2>
-    <div>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>9:00 - 10:00</td>
-                    <td>Math</td>
-                    <td>English</td>
-                    <td>History</td>
-                    <td>Science</td>
-                    <td>Physical Education</td>
-                </tr>
-                <tr>
-                    <td>10:00 - 11:00</td>
-                    <td>Art</td>
-                    <td>Music</td>
-                    <td>Computer Science</td>
-                    <td>Foreign Language</td>
-                    <td>Chemistry</td>
-                </tr>
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
-    </div>
-</body>
-
-</html>
+</div>
+);
+}
+export default App;
+App {
+text-align: center;
+font-family: Arial, sans-serif;
+}
+.student-container {
+display: flex;
+justify-content: center;
+gap: 20px;
+padding: 20px;
+}
+.student-card {
+border: 2px solid #4caf50;
+padding: 15px;
+border-radius: 10px;
+width: 200px;
+background-color: #f9f9f9;
+box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+color: #333;
+font-size: 1.2rem;
