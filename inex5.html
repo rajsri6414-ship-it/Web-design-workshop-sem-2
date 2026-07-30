@@ -1,0 +1,224 @@
+const { useState, useEffect } = React;
+
+function App() {
+const foodApi = "https://www.themealdb.com/api/json/v1/1/filter.php?c=Vegetarian";
+const logoImg = "https://upload.wikimedia.org/wikipedia/commons/1/13/Swiggy_logo.png";
+const cartIconImg = "https://cdn-icons-png.flaticon.com/512/833/833314.png";
+const footerIconImg = "https://cdn-icons-png.flaticon.com/512/1046/1046857.png";
+
+const [meals, setMeals] = useState([]);
+const [cart, setCart] = useState({}); // Stores items as: { [idMeal]: quantity }
+const [showCartPage, setShowCartPage] = useState(false);
+const [searchQuery, setSearchQuery] = useState("");
+
+// 1. Fetch Data inside useEffect using fetch()
+useEffect(() => {
+fetch(foodApi)
+.then((res) => res.json())
+.then((data) => {
+if (data && data.meals) {
+setMeals(data.meals);
+}
+})
+.catch((err) => console.error("Error fetching data:", err));
+}, []);
+
+// Cart Handlers
+const addToCart = (id) => {
+setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+};
+
+const removeFromCart = (id) => {
+setCart((prev) => {
+const updated = { ...prev };
+if (updated[id] <= 1) { delete updated[id]; } else { updated[id] -=1; } return updated; }); }; // Derive total cart item
+    count const totalCartItems=Object.values(cart).reduce((sum, qty)=> sum + qty, 0);
+
+    // Filter food listings based on search bar text
+    const filteredMeals = meals.filter((meal) =>
+    meal.strMeal.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return (
+    <div style={{ fontFamily: 'Arial, sans-serif' , minHeight: '100vh' , display: 'flex' , flexDirection: 'column' ,
+        backgroundColor: '#fff' }}>
+        <Header logoImg={logoImg} cartIconImg={cartIconImg} totalItems={totalCartItems}
+            setShowCartPage={setShowCartPage} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+        <div style={{ flex: 1, padding: '20px' }}>
+            {showCartPage ? (
+            <CartPage cart={cart} meals={meals} addToCart={addToCart} removeFromCart={removeFromCart}
+                setShowCartPage={setShowCartPage} totalItems={totalCartItems} />
+            ) : (
+            <Main meals={filteredMeals} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />
+            )}
+        </div>
+
+        <Footer footerIconImg={footerIconImg} />
+    </div>
+    );
+    }
+
+    // 2. Header Component
+    const Header = ({ logoImg, cartIconImg, totalItems, setShowCartPage, searchQuery, setSearchQuery }) => {
+    return (
+    <div style={{ display: 'flex' , justifyContent: 'space-between' , alignItems: 'center' , padding: '10px 40px' ,
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)' , backgroundColor: '#fff' }}>
+        <img src={logoImg} alt="Swiggy Logo" style={{ height: '40px' , cursor: 'pointer' }} onClick={()=>
+        setShowCartPage(false)}
+        />
+
+        <input type="text" placeholder="Search for food items..." value={searchQuery} onChange={(e)=>
+        setSearchQuery(e.target.value)}
+        style={{
+        padding: '8px 15px',
+        width: '300px',
+        borderRadius: '5px',
+        border: '1px solid #ccc',
+        fontSize: '14px'
+        }}
+        />
+
+        <div onClick={()=> setShowCartPage(true)}
+            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', position: 'relative' }}
+            >
+            <img src={cartIconImg} alt="Cart" style={{ height: '30px' }} />
+            <span style={{ backgroundColor: '#fc8019' , color: 'white' , borderRadius: '50%' , padding: '2px 6px' ,
+                fontSize: '12px' , fontWeight: 'bold' , position: 'absolute' , top: '-5px' , right: '-10px' }}>
+                {totalItems}
+            </span>
+        </div>
+    </div>
+    );
+    };
+
+    // 3. Main Component (Food Grid View)
+    const Main = ({ meals, cart, addToCart, removeFromCart }) => {
+    return (
+    <div>
+        <h2 style={{ marginBottom: '20px' , color: '#333' }}>Vegetarian Delights</h2>
+        <div style={{ display: 'grid' , gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' , gap: '25px' }}>
+            {meals.map((meal) => {
+            const quantity = cart[meal.idMeal] || 0;
+            return (
+            <div key={meal.idMeal} style={{ border: '1px solid #e0e0e0' , borderRadius: '8px' , padding: '15px' ,
+                textAlign: 'center' , boxShadow: '0 2px 5px rgba(0,0,0,0.05)' , backgroundColor: '#fff' }}>
+                <img src={meal.strMealThumb} alt={meal.strMeal} style={{ width: '100%' , height: '150px' ,
+                    objectFit: 'cover' , borderRadius: '6px' }} />
+                <h4 style={{ margin: '10px 0 5px 0' , fontSize: '16px' , color: '#444' , minHeight: '40px' }}>
+                    {meal.strMeal}</h4>
+
+                <div style={{ color: 'green' , fontSize: '12px' , fontWeight: 'bold' , marginBottom: '10px' }}>
+                    🟢 Veg
+                </div>
+
+                {/* 4. Cart Interaction Logic */}
+                {quantity === 0 ? (
+                <button onClick={()=> addToCart(meal.idMeal)}
+                    style={{
+                    backgroundColor: '#fff',
+                    color: '#60b246',
+                    border: '1px solid #60b246',
+                    padding: '6px 20px',
+                    fontWeight: 'bold',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    width: '100%'
+                    }}
+                    >
+                    ADD
+                </button>
+                ) : (
+                <div style={{ display: 'flex' , justifyContent: 'space-between' , alignItems: 'center' ,
+                    border: '1px solid #60b246' , borderRadius: '4px' , width: '100%' , boxSizing: 'border-box' }}>
+                    <button onClick={()=> removeFromCart(meal.idMeal)}
+                        style={{ border: 'none', background: 'none', color: '#60b246', padding: '6px 12px', cursor:
+                        'pointer', fontWeight: 'bold', fontSize: '16px' }}
+                        >
+                        -
+                    </button>
+                    <span style={{ color: '#60b246' , fontWeight: 'bold' }}>{quantity}</span>
+                    <button onClick={()=> addToCart(meal.idMeal)}
+                        style={{ border: 'none', background: 'none', color: '#60b246', padding: '6px 12px', cursor:
+                        'pointer', fontWeight: 'bold', fontSize: '16px' }}
+                        >
+                        +
+                    </button>
+                </div>
+                )}
+            </div>
+            );
+            })}
+        </div>
+    </div>
+    );
+    };
+
+    // 5. CartPage Component
+    const CartPage = ({ cart, meals, addToCart, removeFromCart, setShowCartPage, totalItems }) => {
+    const cartItems = meals.filter(meal => cart[meal.idMeal] > 0);
+
+    return (
+    <div style={{ maxWidth: '600px' , margin: '0 auto' , padding: '20px' , backgroundColor: '#fff' , borderRadius: '8px'
+        , boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+        <button onClick={()=> setShowCartPage(false)}
+            style={{
+            backgroundColor: '#333',
+            color: '#fff',
+            border: 'none',
+            padding: '8px 15px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            marginBottom: '20px'
+            }}
+            >
+            ← Back to Menu
+        </button>
+
+        <h3>Your Selected Items</h3>
+        {cartItems.length === 0 ? (
+        <p style={{ color: '#777' }}>Your cart is empty. Go add some delicious meals!</p>
+        ) : (
+        <div>
+            {cartItems.map((item) => {
+            const qty = cart[item.idMeal];
+            return (
+            <div key={item.idMeal} style={{ display: 'flex' , justifyContent: 'space-between' , alignItems: 'center' ,
+                padding: '12px 0' , borderBottom: '1px solid #eee' }}>
+                <div style={{ display: 'flex' , alignItems: 'center' , gap: '15px' }}>
+                    <img src={item.strMealThumb} alt={item.strMeal} style={{ width: '50px' , height: '50px' ,
+                        borderRadius: '4px' , objectFit: 'cover' }} />
+                    <span style={{ fontWeight: '500' }}>{item.strMeal}</span>
+                </div>
+
+                <div style={{ display: 'flex' , alignItems: 'center' , border: '1px solid #60b246' , borderRadius: '4px'
+                    }}>
+                    <button onClick={()=> removeFromCart(item.idMeal)} style={{ border: 'none', background: 'none',
+                        color: '#60b246', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>-</button>
+                    <span style={{ padding: '0 5px' , color: '#60b246' , fontWeight: 'bold' }}>{qty}</span>
+                    <button onClick={()=> addToCart(item.idMeal)} style={{ border: 'none', background: 'none', color:
+                        '#60b246', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>+</button>
+                </div>
+            </div>
+            );
+            })}
+            <div style={{ marginTop: '20px' , paddingTop: '15px' , borderTop: '2px solid #333' , fontWeight: 'bold' ,
+                fontSize: '18px' , textAlign: 'right' }}>
+                Total Items: {totalItems}
+            </div>
+        </div>
+        )}
+    </div>
+    );
+    };
+
+    // 6. Footer Component
+    const Footer = ({ footerIconImg }) => {
+    return (
+    <div style={{ backgroundColor: '#1a1a1a' , color: '#fff' , textAlign: 'center' , padding: '15px' , marginTop: 'auto'
+        , display: 'flex' , justifyContent: 'center' , alignItems: 'center' , gap: '10px' , fontSize: '14px' }}>
+        <img src={footerIconImg} alt="Footer Icon" style={{ height: '20px' }} />
+        <span>© Veg Food App 🌱</span>
+    </div>
+    );
+    };
