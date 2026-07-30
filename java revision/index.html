@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>java revision</h1>
+    <p>This is a simple java revision page.</p>
+    <button onclick="runcode()">runcode</button>
+    <p id="output"></p>
+    <script>
+        function runcode() {
+
+            let number1 = 10;
+            let number2 = 20;
+            let sum = number1 + number2;
+            document.getElementById("output").innerText = "SUM IS:" + sum;
+        }
+    </script>
+    <h2>data type example</h2>
+    <button onclick="runcode1()">runcode</button>
+    <p id="output1"></p>
+    <script>
+        function runcode1() {
+            let age = 16; // int
+            let b = 20.5; // double
+            let c = "Hello"; // String
+            let d = true; // boolean
+            document.getElementById("output1").innerText = "age is:" + age + " b is:" + b + " c is:" + c + " d is:" + d;
+        }
+    </script>
+    <h2>operators in java</h2>
+    <button onclick="runcode2()">runcode</button>
+    <p id="output2"></p>
+    <script>
+        function runcode2() {
+            let a = 10;
+            let b = 20;
+            let c = a + b;
+            document.getElementById("output2").innerText = "Sum is: " + c;
+            document.getElementById("output2").innerText += "\nDifference is: " + (a - b);
+            document.getElementById("output2").innerText += "\nProduct is: " + (a * b);
+            document.getElementById("output2").innerText += "\nQuotient is: " + (a / b);
+        }
+    </script>
+    <!-- write a program to find the no, is odd or evenn -->
+    <h2>if else condition</h2>
+    <button onclick="runcode3()">runcode</button>
+    <p id="output3"></p>
+    <script>
+        function runcode3() {
+            let number = 10;
+            if (number % 2 == 0) {
+                document.getElementById("output3").innerText = "Number is even";
+            } else {
+                document.getElementById("output3").innerText = "Number is odd";
+            }
+        }
+    </script>
+    <h2>Functions Example</h2>
+    <button onclick="runCodes()">Run Code</button>
+    <p id="results"></p>
+    <script>
+        function runCodes() {
+            // this function takes two numbers and returns their sum
+            function addNumbers(a, b) {
+                return a + b;
+            }
+            // calling (using) the function
+            let sum = addNumbers(5, 7);
+            document.getElementById("results").innerText = "Sum is: " + sum;
+        }
+    </script>
+    <h2>array example</h2>
+    <button onclick="runcode()">runcode</button>
+    <p id="output4"></p>
+    <script>
+        function runcode() {
+            let students = ["aryan", "riya", "preet"]
+            let first = students[0];
+            let total = students.length;
+            students.push("siya");
+            document.getElementById("output4").innerText =
+                "first" + first + "|" +
+                "total" + total + "|" +
+                "new student added" + students;
+
+        }
+    </script> 
+    <h2>students</h2>
+    <button onclick="runcode5()">runcode</button>
+    <p id="output5"></p>
+    <script>
+        function runcode5() {
+            let students = [
+                { name: "aryan", age: 20 },
+                { name: "riya", age: 21 },
+                { name: "preet", age: 22 }
+            ];
+            let studentNames = students.map(student => student.name);
+            document.getElementById("output5").innerText = "Student Names: " + studentNames.join(", ");
+
+        }
+    </script>
+    <h2>demo text</h2>
+    <p id="demoText">This is a simple demo text.</p>
+    <button onclick="changeText()">Change Text</button>
+    <script>
+        function changeText() {
+            document.getElementById("demoText").innerText = "hello ! javascript is a programming language";
+            document.getElementById("demoText").style.color = "green";
+        }
+    </script>
+    <h2>event example</h2>
+    <button onclick="setupEvent()">setup event(run)</button>
+    <button id="clickmebtn">click me!</button>
+    <script>
+        function setupEvent(){
+            document.getElementById("clickmebtn").addEventListener("click", function() {
+                alert("Button clicked!");
+            });
+        }
+    </script>
+</body>
+
+</html>
