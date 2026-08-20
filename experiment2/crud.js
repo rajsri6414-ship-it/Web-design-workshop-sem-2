@@ -1,11 +1,22 @@
 import fs from 'node:fs';
-fs.writeFile('output.txt', 'Hello, World!', (err) => {
+//create
+fs.writeFile('message.txt', 'Hello world', (err) => {
     if (err) throw err;
-    console.log('File has been saved!');
-
-    fs.readFile('output.txt', 'utf8', (err, data) => {
-        if (err) throw err;
-        console.log(data);
+    console.log('File created ');
+    //read
+    fs.readFile('message.txt', 'utf8', (err, data) => {
+        console.log('file content:', data);
     });
+
 });
 
+//updated
+
+fs.writeFile('message.txt', 'this is the updated content', (err) => {
+    if (err) throw err;
+    console.log('File overwritten(updated)!');
+});
+fs.appendFile('message.txt', '\nthis line is added', (err) => {
+    if (err) throw err;
+    console.log('File updated(append)!');
+});
