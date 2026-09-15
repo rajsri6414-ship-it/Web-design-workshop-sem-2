@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form4</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef4ff, #fdf2ff, #e8fff8);
+            color: #1f2937;
+            padding: 40px 20px;
+        }
+
+        .form-container {
+            max-width: 1100px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #dfe9ff;
+            border-radius: 22px;
+            box-shadow: 0 12px 30px rgba(62, 104, 212, 0.15);
+            padding: 28px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1d4ed8;
+            font-size: 2.2rem;
+        }
+
+        fieldset {
+            border: 1px solid #cfe0ff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f9fbff;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #183b8c;
+            padding: 0 10px;
+        }
+
+        form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            align-items: end;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label,
+        .gender-label {
+            font-weight: 600;
+            color: #1f2a44;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            border-radius: 10px;
+            border: 1px solid #c9d8ff;
+            padding: 10px 12px;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .gender-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 6px;
+        }
+
+        button {
+            width: fit-content;
+            padding: 12px 26px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Complex Form</h1>
+        <form>
+            <fieldset>
+                <legend>Personal Information</legend>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="name">Name :</label>
+                        <input type="text" id="name" name="Name">
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email ID :</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+
+                    <div class="field">
+                        <label for="tel">Phone Number :</label>
+                        <input type="tel" id="tel" name="Phone Number">
+                    </div>
+
+                    <div class="field">
+                        <label for="datepicker">Date of Birth</label>
+                        <input type="date" name="Date of Birth" id="datepicker">
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 18px;">
+                    <div class="field">
+                        <span class="gender-label">Gender:</span>
+                        <div class="gender-group">
+                            <input type="radio" id="radio1" name="radio">
+                            <label for="radio1">Male</label>
+                            <input type="radio" id="radio2" name="radio">
+                            <label for="radio2">Female</label>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="Country">Country</label>
+                        <select name="Country" id="Country">
+                            <option value="a">United States</option>
+                            <option value="b">India</option>
+                            <option value="c">Japan</option>
+                            <option value="d">China</option>
+                            <option value="e">France</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Address</legend>
+                <div class="row">
+                    <div class="field">
+                        <label for="Street">Street</label>
+                        <input type="text" id="Street" name="Street">
+                    </div>
+
+                    <div class="field">
+                        <label for="City">City</label>
+                        <input type="text" id="City" name="City">
+                    </div>
+
+                    <div class="field">
+                        <label for="State">State</label>
+                        <input type="text" id="State" name="State">
+                    </div>
+
+                    <div class="field">
+                        <label for="number">Zip Code</label>
+                        <input type="number" id="number" name="number">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Other Information</legend>
+                <div class="field">
+                    <label for="textarea">Comments</label>
+                    <textarea name="textarea" id="textarea" cols="60" rows="10"></textarea>
+                </div>
+
+                <div class="checkbox-row">
+                    <input type="checkbox" name="checkbox" id="checkbox">
+                    <label for="checkbox">I agree to the terms of service</label>
+                </div>
+            </fieldset>
+
+            <button type="submit">Select</button>
+        </form>
+    </div>
+</body>
+
+</html>
